@@ -41,10 +41,6 @@ class TestReg(object):
         query=Registry._build_adql(order_by="foobar",service_type="image")
         assert "order by foobar" in query
 
-    def test_adql_logic(self):
-        query=Registry._build_adql(logic_string=' foobar ',service_type="image")
-        assert " foobar " in query
-
 
 
     def test_query_counts(self):

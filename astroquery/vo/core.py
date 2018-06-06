@@ -90,8 +90,6 @@ class RegistryClass(VoBase):
             Any substring in ivoid (a unique identifier of the service)
         publisher : string, optional
             The name of any publishing organization (e.g., "stsci", "heasarc")
-        logic_string : string, optional
-            Combine the criteria with ' and ' by default but you can change to, e.g., ' or '. 
         order_by : string, optional
             What column to order it by.  The returned columns are:
                 "waveband","short_name","ivoid","res_description","access_url","reference_url","publisher", service_type"
@@ -100,7 +98,7 @@ class RegistryClass(VoBase):
             When True, the ADQL query computed from the keyword arguments will be printed.
         """
 
-        adql = self._build_adql(service_type, keyword, waveband, source, publisher, order_by, logic_string, verbose)
+        adql = self._build_adql(service_type, keyword, waveband, source, publisher, order_by, verbose)
         if adql is None:
             raise ValueError('Unable to compute query based on input arguments.')
 
@@ -123,9 +121,10 @@ class RegistryClass(VoBase):
         aptable = utils.astropy_table_from_votable_response(response)
         return aptable
 
-    def _build_adql(self, service_type="", keyword="", waveband="", source="", publisher="", order_by="", logic_string=" and ", verbose=False):
+    def _build_adql(self, service_type="", keyword="", waveband="", source="", publisher="", order_by="", verbose=False):
 
         # Default values
+        logic_string=' and '
 
         if "image" in service_type.lower():
             service_type = "simpleimageaccess"
