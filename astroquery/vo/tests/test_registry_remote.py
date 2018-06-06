@@ -2,8 +2,8 @@ from astroquery.vo import Registry
 from astropy.tests.helper import remote_data 
 import pytest
 
-## To run just this test, 
-## 
+## To run just this test,
+##
 ## ( cd ../../ ; python setup.py test -t astroquery/vo/tests/test_registry_remote.py --remote-data )
 ##
 
@@ -66,4 +66,5 @@ class TestReg(object):
             pytest.fail("Did not get the expected timeout exception but {}".format(e))
         else:
             pytest.fail("Did not get the expected timeout exception but none")
+
 
