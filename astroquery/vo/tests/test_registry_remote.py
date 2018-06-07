@@ -47,12 +47,11 @@ class TestReg(object):
 
     def test_timeout(self):
         from requests.exceptions import (Timeout, ReadTimeout)
-        from urllib3.exceptions import ReadTimeoutError
         myReg = Registry()
         myReg._TIMEOUT = 0.1
         try:
             heasarc_image_services = myReg.query(source='heasarc', service_type='image')
-        except (Timeout, ReadTimeout, ReadTimeoutError, ConnectionError):
+        except (Timeout, ReadTimeout, ConnectionError):
             pass
         except Exception as e:
             pytest.fail("Did not get the expected timeout exception but {}".format(e))
