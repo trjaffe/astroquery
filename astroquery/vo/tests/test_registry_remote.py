@@ -1,5 +1,5 @@
 from astroquery.vo import Registry
-from astropy.tests.helper import remote_data 
+from astropy.tests.helper import remote_data
 import pytest
 
 ## To run just this test,
@@ -18,49 +18,43 @@ class TestReg(object):
         assert(len(heasarc_image_services) >= 108)
 
     def test_adql_service(self):
-        query=Registry._build_adql(service_type="image")
+        query = Registry._build_adql(service_type="image")
         assert("cap_type like '%simpleimageaccess%'" in query)
 
     def test_adql_keyword(self):
-        query=Registry._build_adql(keyword="foobar",service_type="image")
+        query = Registry._build_adql(keyword="foobar", service_type="image")
         assert "res_description like '%foobar%'" in query
 
     def test_adql_waveband(self):
-        query=Registry._build_adql(waveband='foobar',service_type="image")
+        query = Registry._build_adql(waveband='foobar', service_type="image")
         assert "waveband like '%foobar%'" in query
 
     def test_adql_source(self):
-        query=Registry._build_adql(source='foobar',service_type="image")
+        query = Registry._build_adql(source='foobar', service_type="image")
         assert "ivoid like '%foobar%'" in query
 
     def test_adql_publisher(self):
-        query=Registry._build_adql(publisher='foobar',service_type="image")
+        query = Registry._build_adql(publisher='foobar', service_type="image")
         assert "role_name like '%foobar%'" in query
 
     def test_adql_orderby(self):
-        query=Registry._build_adql(order_by="foobar",service_type="image")
+        query = Registry._build_adql(order_by="foobar", service_type="image")
         assert "order by foobar" in query
 
-
-
     def test_query_counts(self):
-        aptable=Registry.query_counts('publisher', 15, verbose=True)
+        aptable = Registry.query_counts('publisher', 15, verbose=True)
         assert aptable[0][1] > 17000
-
 
     def test_timeout(self):
         from requests.exceptions import (Timeout, ReadTimeout)
         from urllib3.exceptions import ReadTimeoutError
-        myReg=Registry()
-        myReg._TIMEOUT=0.1
+        myReg = Registry()
+        myReg._TIMEOUT = 0.1
         try:
-            heasarc_image_services = myReg.query(source='heasarc',
-                                                service_type='image')
+            heasarc_image_services = myReg.query(source='heasarc', service_type='image')
         except (Timeout, ReadTimeout, ReadTimeoutError, ConnectionError):
             pass
         except Exception as e:
             pytest.fail("Did not get the expected timeout exception but {}".format(e))
         else:
             pytest.fail("Did not get the expected timeout exception but none")
-
-
