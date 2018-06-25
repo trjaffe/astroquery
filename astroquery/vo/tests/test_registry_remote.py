@@ -9,9 +9,8 @@ import pytest
 
 from .thetests import TestReg
 
-## Have to decorate the TestReg with remote_data. This is the equivalent to 
+## Have to decorate the TestReg with remote_data. This is the equivalent to
 ##   @remote_data
 ##   class TestReg...
 ##
 remote_data(TestReg)
-
