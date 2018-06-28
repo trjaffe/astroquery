@@ -68,7 +68,7 @@ class RegistryClass(VoBase):
         self._RETRIES = 2    # total number of times to try
         self._REGISTRY_TAP_SYNC_URL = conf.registry_tap_url + "/sync"
 
-    def query(self, service_type="", keyword="", waveband="", source="", publisher="", order_by="", logic_string=' and ', verbose=False):
+    def query(self, service_type="", keyword="", waveband="", source="", publisher="", order_by="", logic_string=' and ', verbose=False, return_raw=False):
         """
         Query the Virtual Observatory registry to find services which can then be searched.
 
@@ -116,6 +116,8 @@ class RegistryClass(VoBase):
             print('Queried: {}\n'.format(response.url))
 
         aptable = utils.astropy_table_from_votable_response(response)
+        aptable.meta['astroquery.vo']['data']=tap_params
+        if return_raw: return aptable, response
         return aptable
 
     def _build_adql(self, service_type="", keyword="", waveband="", source="", publisher="", order_by="", verbose=False):
@@ -189,7 +191,7 @@ class RegistryClass(VoBase):
 
         return query
 
-    def query_counts(self, field, minimum=1, **kwargs):
+    def query_counts(self, field, minimum=1, return_raw=False, **kwargs):
 
         adql = self._build_counts_adql(field, minimum)
 
@@ -205,11 +207,12 @@ class RegistryClass(VoBase):
         }
 
         response = self._request('POST', url, data=tap_params, cache=False)
-
         if kwargs.get('verbose'):
             print('Queried: {}\n'.format(response.url))
 
         aptable = utils.astropy_table_from_votable_response(response)
+        aptable.meta['astroquery.vo']['data']=tap_params
+        if return_raw: return aptable, response
         return aptable
 
     def _build_counts_adql(self, field, minimum=1):
