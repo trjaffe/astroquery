@@ -14,3 +14,16 @@ from .thetests import TestReg
 ##   class TestReg...
 ##
 remote_data(TestReg)
+
+def test_query_basic():
+    t=TestReg()
+    t.query_basic()
+
+def test_query_counts():
+    t=TestReg()
+    t.query_counts()
+
+def test_query_timeout():
+    t=TestReg()
+    t.query_counts()
+
