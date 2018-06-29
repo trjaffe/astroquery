@@ -13,17 +13,20 @@ from .thetests import TestReg
 ##   @remote_data
 ##   class TestReg...
 ##
+
 remote_data(TestReg)
 
+
 def test_query_basic():
-    t=TestReg()
+    t = TestReg()
     t.query_basic()
 
+
 def test_query_counts():
-    t=TestReg()
+    t = TestReg()
     t.query_counts()
+
 
 def test_query_timeout():
-    t=TestReg()
+    t = TestReg()
     t.query_counts()
-
